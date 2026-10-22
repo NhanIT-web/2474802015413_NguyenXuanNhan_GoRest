@@ -47,11 +47,13 @@
               }
             },
             "url": {
-              "raw": "{{baseurl}}/users",
+              "raw": "{{baseurl}}/public/v2/users",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
+                "public",
+                "v2",
                 "users"
               ]
             }
@@ -87,11 +89,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseurl}}/userId",
+              "raw": "{{baseurl}}/public/v2/userId",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
+                "public",
+                "v2",
                 "userId"
               ]
             }
@@ -143,11 +147,13 @@
               }
             },
             "url": {
-              "raw": "{{baseurl}}/userId",
+              "raw": "{{baseurl}}/public/v2/userId",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
+                "public",
+                "v2",
                 "userId"
               ]
             }
@@ -175,11 +181,13 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseurl}}/userId",
+              "raw": "{{baseurl}}/public/v2/userId",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
+                "public",
+                "v2",
                 "userId"
               ]
             }
@@ -258,11 +266,13 @@
               }
             },
             "url": {
-              "raw": "{{baseurl}}/users",
+              "raw": "{{baseurl}}/public/v2/users",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
+                "public",
+                "v2",
                 "users"
               ]
             }
@@ -304,11 +314,13 @@
               "raw": "{\n  \"name\": \"Duplicate User\",\n  \"gender\": \"male\",\n  \"email\": \"nhan2474802015413_01@vlu.edu.vn\",\n  \"status\": \"active\"\n}"
             },
             "url": {
-              "raw": "{{baseurl}}/users",
+              "raw": "{{baseurl}}/public/v2/users",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
+                "public",
+                "v2",
                 "users"
               ]
             }
@@ -334,7 +346,18 @@
           ],
           "request": {
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": "{{baseurl}}/public/v2/userId",
+              "host": [
+                "{{baseurl}}"
+              ],
+              "path": [
+                "public",
+                "v2",
+                "userId"
+              ]
+            }
           },
           "response": []
         }
