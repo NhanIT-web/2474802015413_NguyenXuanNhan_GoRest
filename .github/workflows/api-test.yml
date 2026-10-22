@@ -1,29 +1,18 @@
-name: API Testing Workflow
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+name: API Test
+on: [push, workflow_dispatch]
 
 jobs:
-  api-test:
+  newman:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 1. Checkout code
-        uses: actions/checkout@v4
-
-      - name: 2. Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-
-      - name: 3. Install Newman
-        run: npm install -g newman
-        
-      - name: 4. Run Postman Collection with Newman
-        run: |
+          node-version: 20
+      - run: npm install -g newman
+      - run: |
           newman run "2474802015413_NguyenXuanNhan_GoRest.postman_collection.json" \
             -e "2474802015413_NguyenXuanNhan_GoRest_Env.postman_environment.json" \
-            -d "users.csv"
+            -d users.csv \
+            --env-var "baseurl=https://gorest.co.in" \
+            --env-var "token=${{ secrets.GOREST_TOKEN }}"
