@@ -155,14 +155,6 @@
           "response": []
         },
         {
-          "name": "Teardown: Delete All Users",
-          "request": {
-            "method": "GET",
-            "header": []
-          },
-          "response": []
-        },
-        {
           "name": "Delete User",
           "event": [
             {
