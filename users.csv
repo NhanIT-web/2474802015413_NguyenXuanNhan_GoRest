@@ -1,4 +1,4 @@
 name,gender,status,email
-Nguyen Xuan Nhan,male,active,nhan_1792685723_1@vlu.edu.vn
-Tran Minh,male,active,minh_1792685723_2@vlu.edu.vn
-Le Hoa,female,active,hoa_1792685723_3@vlu.edu.vn
+Nguyen Xuan Nhan,male,active,nhan_${TIMESTAMP}_1@vlu.edu.vn
+Tran Minh,male,active,minh_${TIMESTAMP}_2@vlu.edu.vn
+Le Hoa,female,active,hoa_${TIMESTAMP}_3@vlu.edu.vn
