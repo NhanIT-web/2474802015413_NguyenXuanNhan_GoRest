@@ -1,0 +1,43 @@
+name: API Test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Check files
+        run: ls -la
+
+      - name: Check token
+        env:
+          GOREST_TOKEN: ${{ secrets.GOREST_TOKEN }}
+        run: |
+          if [ -z "$GOREST_TOKEN" ]; then
+            echo "GOREST_TOKEN is EMPTY - tao secret trong Settings > Secrets and variables > Actions"
+            exit 1
+          fi
+          echo "Token length: ${#GOREST_TOKEN}"
+
+      - name: Run Newman
+        env:
+          GOREST_TOKEN: ${{ secrets.GOREST_TOKEN }}
+        run: |
+          newman run "2474802015413_NguyenXuanNhan_GoRest.postman_collection.json" \
+            -e "2474802015413_NguyenXuanNhan_GoRest_Env.postman_environment.json" \
+            -d users.csv \
+            --env-var "baseurl=https://gorest.co.in" \
+            --env-var "token=$GOREST_TOKEN" \
+            --delay-request 1000 \
+            --verbose

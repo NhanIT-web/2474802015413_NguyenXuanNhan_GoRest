@@ -15,22 +15,31 @@
           "name": "Create User",
           "event": [
             {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.unset(\"userId\");"
+                ]
+              }
+            },
+            {
               "listen": "test",
               "script": {
+                "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Tạo User thành công (Status 201 Created)\", function () {",
                   "    pm.response.to.have.status(201);",
                   "});",
                   "",
-                  "// Đoạn code tự động lấy ID và ghi vào biến userId:",
-                  "var jsonData = pm.response.json();",
-                  "if (jsonData && jsonData.id) {",
-                  "    pm.environment.set(\"userId\", jsonData.id);",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
+                  "if (pm.response.code === 201) {",
+                  "    pm.environment.set(\"userId\", pm.response.json().id);",
+                  "}",
+                  "",
+                  "pm.test(\"Đã lấy được userId\", function () {",
+                  "    pm.expect(pm.environment.get(\"userId\")).to.be.ok;",
+                  "});"
+                ]
               }
             }
           ],
@@ -297,16 +306,49 @@
           "name": "Create User with Duplicate Email",
           "event": [
             {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Tạo sẵn user với email này để request chính bị trùng email (422)",
+                  "var d = function (k) { return pm.iterationData.get(k) || pm.variables.get(k); };",
+                  "pm.sendRequest({",
+                  "    url: pm.environment.get(\"baseurl\") + \"/public/v2/users\",",
+                  "    method: \"POST\",",
+                  "    header: {",
+                  "        \"Content-Type\": \"application/json\",",
+                  "        \"Authorization\": \"Bearer \" + pm.environment.get(\"token\")",
+                  "    },",
+                  "    body: { mode: \"raw\", raw: JSON.stringify({",
+                  "        name: d(\"name\"), gender: d(\"gender\"), email: d(\"email\"), status: d(\"status\")",
+                  "    }) }",
+                  "}, function (err, res) {",
+                  "    if (!err && res.code === 201) {",
+                  "        pm.environment.set(\"dupUserId\", res.json().id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            },
+            {
               "listen": "test",
               "script": {
+                "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Báo lỗi khi trùng Email (Status 422 Unprocessable Entity)\", function () {",
                   "    pm.response.to.have.status(422);",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
+                  "});",
+                  "",
+                  "// Dọn user tạo sẵn ở pre-request",
+                  "var id = pm.environment.get(\"dupUserId\");",
+                  "if (id) {",
+                  "    pm.sendRequest({",
+                  "        url: pm.environment.get(\"baseurl\") + \"/public/v2/users/\" + id,",
+                  "        method: \"DELETE\",",
+                  "        header: { \"Authorization\": \"Bearer \" + pm.environment.get(\"token\") }",
+                  "    }, function () { pm.environment.unset(\"dupUserId\"); });",
+                  "}"
+                ]
               }
             }
           ],
