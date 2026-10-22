@@ -22,7 +22,7 @@
                   "    pm.response.to.have.status(201);",
                   "});",
                   "",
-                  "// Trích xuất id tự động và lưu vào biến môi trường (API Chaining)",
+                  "// Đoạn code tự động lấy ID và ghi vào biến userId:",
                   "var jsonData = pm.response.json();",
                   "if (jsonData && jsonData.id) {",
                   "    pm.environment.set(\"userId\", jsonData.id);",
@@ -39,7 +39,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"{{name}}\",\n  \"gender\": \"{{gender}}\",\n  \"email\": \"{{email}}\",\n  \"status\": \"{{status}}\"\n}",
+              "raw": "{\n    \"name\": \"{{name}}\",\n    \"gender\": \"{{gender}}\",\n    \"email\": \"{{email}}\",\n    \"status\": \"{{status}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -83,20 +83,32 @@
                 "packages": {},
                 "requests": {}
               }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
           ],
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseurl}}/public/v2/userId",
+              "raw": "{{baseurl}}/public/v2/users/{{userId}}",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
                 "public",
                 "v2",
-                "userId"
+                "users",
+                "{{userId}}"
               ]
             }
           },
@@ -147,14 +159,15 @@
               }
             },
             "url": {
-              "raw": "{{baseurl}}/public/v2/userId",
+              "raw": "{{baseurl}}/public/v2/users/{{userId}}",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
                 "public",
                 "v2",
-                "userId"
+                "users",
+                "{{userId}}"
               ]
             }
           },
@@ -181,14 +194,15 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseurl}}/public/v2/userId",
+              "raw": "{{baseurl}}/public/v2/users/{{userId}}",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
                 "public",
                 "v2",
-                "userId"
+                "users",
+                "{{userId}}"
               ]
             }
           },
@@ -311,7 +325,12 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Duplicate User\",\n  \"gender\": \"male\",\n  \"email\": \"nhan2474802015413_01@vlu.edu.vn\",\n  \"status\": \"active\"\n}"
+              "raw": "{\n    \"name\": \"{{name}}\",\n    \"gender\": \"{{gender}}\",\n    \"email\": \"{{email}}\",\n    \"status\": \"{{status}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "{{baseurl}}/public/v2/users",
@@ -348,14 +367,15 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseurl}}/public/v2/userId",
+              "raw": "{{baseurl}}/public/v2/users/{{userId}}",
               "host": [
                 "{{baseurl}}"
               ],
               "path": [
                 "public",
                 "v2",
-                "userId"
+                "users",
+                "{{userId}}"
               ]
             }
           },
