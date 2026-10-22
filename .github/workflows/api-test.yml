@@ -1,0 +1,31 @@
+name: GoRest API CI/CD Testing
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  api-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Execute Automated API Tests
+        run: |
+          newman run Collection.json \
+            -e Environment.json \
+            -d users.csv \
+            --env-var "token=${{ secrets.GOREST_TOKEN }}" \
+            --delay-request 300
