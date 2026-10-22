@@ -12,7 +12,8 @@ jobs:
       - run: npm install -g newman
       - run: |
           newman run "2474802015413_NguyenXuanNhan_GoRest.postman_collection.json" \
-            -e "2474802015413_NguyenXuanNhan_GoRest_Env.postman_environment.json" \
-            -d users.csv \
-            --env-var "baseurl=https://gorest.co.in" \
-            --env-var "token=${{ secrets.GOREST_TOKEN }}"
+              -e "2474802015413_NguyenXuanNhan_GoRest_Env.postman_environment.json" \
+              -d users.csv \
+              --env-var "baseurl=https://gorest.co.in" \
+              --env-var "token=${{ secrets.GOREST_TOKEN }}" \
+              --verbose
