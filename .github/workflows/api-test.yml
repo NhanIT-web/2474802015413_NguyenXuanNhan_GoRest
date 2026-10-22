@@ -24,8 +24,8 @@ jobs:
 
       - name: 4. Execute Automated API Tests
         run: |
-          newman run Collection.json \
-            -e "2474802015413_NguyenXuanNhan_GoRest_Env.postman_environment.json" \
+          newman run "2474802015413_NguyenXuanNhan_GoRest.postman_collection.json" \
+            -e "Environment.json" \
             -d users.csv \
             --env-var "token=${{ secrets.GOREST_TOKEN }}" \
             --delay-request 300
